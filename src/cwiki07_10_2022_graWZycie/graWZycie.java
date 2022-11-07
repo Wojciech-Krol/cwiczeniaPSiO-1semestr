@@ -29,8 +29,8 @@ public class graWZycie {
         }
     }
     public void printBoard(){
-        for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
+        for(int j=0;j<height;j++){
+            for(int i=0;i<width;i++){
                 if(board[i][j]==1){
                     System.out.print("⚪");
                 }
@@ -49,8 +49,8 @@ public class graWZycie {
     }
     private void makeOneStep(){
         int[][] newBoard = new int[width][height];
-        for(int i=0;i<height;i++){
-            for(int j=0;j<width;j++){
+        for(int j=0;j<height;j++){
+            for(int i=0;i<width;i++){
                 int neighbours = countNeighbours(i,j);
                 if(board[i][j]==1){
                     if(neighbours>=2){
@@ -70,41 +70,16 @@ public class graWZycie {
         }
         board=newBoard;
     }
-    private int countNeighbours(int w, int k){
-        int neighbours=0;
-        if(w==0){
-            if(k==0){
-                neighbours=board[w][k+1]+board[w+1][k]+board[w+1][k+1];
+    private int countNeighbours(int w,int k) {
+        int neighbours = 0;
+        for(int i = w-1; i < w+2; i++) {
+            for(int j = k-1; j < k+2; j++) {
+                if(i < 0 || i > width-1 || j < 0 || j > height-1) { }
+                else if(i == w && j == k){ }
+                else if(board[i][j] == 1) {
+                    neighbours++;
+                }
             }
-            else if(k==width-1){
-                neighbours=board[w][k-1]+board[w+1][k]+board[w+1][k-1];
-            }
-            else {
-                neighbours=board[w][k-1]+board[w][k+1]+board[w+1][k-1]+board[w+1][k]+board[w+1][k+1];
-            }
-        }
-        else if(w==height-1){
-            if(k==0){
-                neighbours=board[w][k+1]+board[w-1][k]+board[w-1][k+1];
-            }
-            else if(k==width-1){
-                neighbours=board[w][k-1]+board[w-1][k]+board[w-1][k-1];
-            }
-            else {
-                neighbours=board[w][k-1]+board[w][k+1]+board[w-1][k-1]+board[w-1][k]+board[w-1][k+1];
-            }
-        }
-        else {
-            if(k==0){
-                neighbours=board[w-1][k]+board[w-1][k+1]+board[w][k+1]+board[w+1][k]+board[w+1][k+1];
-            }
-            else if(k==width-1){
-                neighbours=board[w-1][k]+board[w-1][k-1]+board[w][k-1]+board[w+1][k]+board[w+1][k-1];
-            }
-            else {
-                neighbours=board[w-1][k-1]+board[w-1][k]+board[w-1][k+1]+board[w][k-1]+board[w][k+1]+board[w+1][k-1]+board[w+1][k]+board[w+1][k+1];
-            }
-
         }
         return neighbours;
     }
